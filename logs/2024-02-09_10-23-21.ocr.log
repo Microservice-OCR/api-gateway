@@ -1,0 +1,43 @@
+2024/02/09 10:23:22 Extraction complétée
+2024/02/09 10:23:41 Méthode non autorisée
+2024/02/09 10:23:41 http: panic serving 172.19.0.1:34184: Méthode non autorisée
+goroutine 180 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc0004221c0?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001afa40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc00045a0e0}, 0xc00044e100)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc00045a0e0?}, 0xc00043216c?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc00045a0e0}, 0xc00044e100)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc00045a0e0?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc00044a000, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb
+2024/02/09 10:23:41 Méthode non autorisée
+2024/02/09 10:23:41 http: panic serving 172.19.0.1:34196: Méthode non autorisée
+goroutine 183 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc000422270?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001afa40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc00045a1c0}, 0xc00044e300)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc00045a1c0?}, 0xc00043222c?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc00045a1c0}, 0xc00044e300)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc00045a1c0?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc00044a2d0, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb

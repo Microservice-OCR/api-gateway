@@ -1,0 +1,24 @@
+2024/02/09 10:10:13 Message : Image uploaded and path saved successfully
+2024/02/09 10:10:13 Id : 65c5fa059c14eadf1623c9c0
+2024/02/09 10:10:13 Extraction complétée
+2024/02/09 10:10:18 Méthode non autorisée
+2024/02/09 10:10:18 http: panic serving 172.19.0.1:47436: Méthode non autorisée
+goroutine 15 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc000014840?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc000079a40?, 0x0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc0001522a0}, 0xc000016800)
+	/go/gateway/main.go:182 +0xaf5
+net/http.HandlerFunc.ServeHTTP(0x4404c0?, {0x7642e8?, 0xc0001522a0?}, 0x63803a?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x945820?, {0x7642e8, 0xc0001522a0}, 0xc000016800)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0xc00007d950?}, {0x7642e8?, 0xc0001522a0?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc0001445a0, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb

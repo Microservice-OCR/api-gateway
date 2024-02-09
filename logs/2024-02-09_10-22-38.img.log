@@ -1,0 +1,45 @@
+2024/02/09 10:22:38 Message : Image uploaded and path saved successfully
+2024/02/09 10:22:38 Id : 65c5fceeedaf1ad86e4c054e
+2024/02/09 10:22:38 Extraction complétée
+2024/02/09 10:23:10 Méthode non autorisée
+2024/02/09 10:23:10 http: panic serving 172.19.0.1:42556: Méthode non autorisée
+goroutine 95 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc0000aef70?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001dda40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc0000e67e0}, 0xc0000df500)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc0000e67e0?}, 0xc0000a10ec?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc0000e67e0}, 0xc0000df500)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc0000e67e0?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc00021ea20, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb
+2024/02/09 10:23:10 Méthode non autorisée
+2024/02/09 10:23:10 http: panic serving 172.19.0.1:53208: Méthode non autorisée
+goroutine 168 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc00020af90?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001ada40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc000220a80}, 0xc00021b300)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc000220a80?}, 0xc000230dac?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc000220a80}, 0xc00021b300)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc000220a80?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc00021f050, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb
