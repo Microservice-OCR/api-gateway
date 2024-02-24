@@ -1,0 +1,31 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "/api/**/*.go",
+            "use": "@vercel/go"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/upload",
+            "methods": ["POST"],
+            "dest": "/api/upload.go"
+        },
+        {
+            "src": "/api/download/(.*)",
+            "methods": ["GET"],
+            "dest": "/api/download.go"
+        },
+        {
+            "src": "/api/ocr",
+            "methods": ["GET"],
+            "dest": "/api/ocr.go"
+        },
+        {
+            "src": "/api/ocr",
+            "methods": ["POST"],
+            "dest": "/api/ocr.go"
+        }
+    ]
+}

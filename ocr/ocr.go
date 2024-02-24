@@ -20,11 +20,11 @@ func getExtract(imageName string) ([]byte, error) {
     }
     log.SetOutput(logFile)
 
-	ocrURI, ok := os.LookupEnv("REACT_APP_OCR_ENGINE_URI")
+	ocrURI, ok := os.LookupEnv("OCR_ENGINE_URI")
 	if !ok {
 		log.Fatal("OCR engine URI not found")
 	}
-	ocrPort, ok := os.LookupEnv("REACT_APP_OCR_ENGINE_PORT")
+	ocrPort, ok := os.LookupEnv("OCR_ENGINE_PORT")
 	if !ok {
 		log.Fatal("OCR engine port not found")
 	}
@@ -60,11 +60,11 @@ func getExtractFromId(id string) ([]byte, error) {
     }
     log.SetOutput(logFile)
 
-	ocrURI, ok := os.LookupEnv("REACT_APP_OCR_ENGINE_URI")
+	ocrURI, ok := os.LookupEnv("OCR_ENGINE_URI")
 	if !ok {
 		log.Fatal("OCR engine URI not found")
 	}
-	ocrPort, ok := os.LookupEnv("REACT_APP_OCR_ENGINE_PORT")
+	ocrPort, ok := os.LookupEnv("OCR_ENGINE_PORT")
 	if !ok {
 		log.Fatal("OCR engine port not found")
 	}
@@ -100,13 +100,9 @@ func postExtractFromId(id string, bodyData models.IInput) ([]byte, error) {
     }
     log.SetOutput(logFile)
 
-	ocrURI, ok := os.LookupEnv("REACT_APP_OCR_ENGINE_URI")
+	ocrURI, ok := os.LookupEnv("OCR_ENGINE_URI")
 	if !ok {
 		log.Fatal("OCR engine URI not found")
-	}
-	ocrPort, ok := os.LookupEnv("REACT_APP_OCR_ENGINE_PORT")
-	if !ok {
-		log.Fatal("OCR engine port not found")
 	}
 	// Convertir les données du corps en JSON
 	jsonData, err := json.Marshal(bodyData)
@@ -116,7 +112,7 @@ func postExtractFromId(id string, bodyData models.IInput) ([]byte, error) {
 	}
 
 	client := &http.Client{}
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s:%s/recognizeFromId/%s", ocrURI, ocrPort, id), bytes.NewBuffer((jsonData)))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/recognizeFromId/%s", ocrURI, id), bytes.NewBuffer((jsonData)))
 	if err != nil {
 		log.Panic("Error during request: ", err)
 		return nil, err

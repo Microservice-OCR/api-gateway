@@ -21,11 +21,11 @@ func getImageFromId(id string) ([]byte, error) {
     }
     log.SetOutput(logFile)
 
-	saveURI, ok := os.LookupEnv("REACT_APP_SAVE_IMG_URI")
+	saveURI, ok := os.LookupEnv("SAVE_IMG_URI")
 	if !ok {
 		log.Fatal("saveIMG URI not found")
 	}
-	savePort, ok := os.LookupEnv("REACT_APP_SAVE_IMG_PORT")
+	savePort, ok := os.LookupEnv("SAVE_IMG_PORT")
 	if !ok {
 		log.Fatal("saveIMG port not found")
 	}
@@ -76,17 +76,12 @@ func SendImageToAPI(file multipart.File, userId string, header *multipart.FileHe
 	}
 	defer logFile.Close()
 	log.SetOutput(io.MultiWriter(os.Stdout, logFile))
-
-	savePort, ok := os.LookupEnv("REACT_APP_SAVE_IMG_PORT")
-	if !ok {
-		log.Fatal("saving port not found")
-	}
-	saveUri, ok := os.LookupEnv("REACT_APP_SAVE_IMG_URI")
+	saveUri, ok := os.LookupEnv("SAVE_IMG_URI")
 	if !ok {
 		log.Fatal("saving URI not found")
 	}
 
-	apiURL := fmt.Sprintf("%s:%s/upload", saveUri, savePort)
+	apiURL := fmt.Sprintf("%s/upload", saveUri)
 
 	var requestBody bytes.Buffer
 	multiPartWriter := multipart.NewWriter(&requestBody)
