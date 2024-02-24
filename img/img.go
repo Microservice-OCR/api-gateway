@@ -10,28 +10,24 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
-	"time"
+	// "time"
 )
 
 func getImageFromId(id string) ([]byte, error) {
 
-    logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.img.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
-    if err != nil {
-        log.Fatal(err)
-    }
-    log.SetOutput(logFile)
+    // logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.img.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+    // log.SetOutput(logFile)
 
 	saveURI, ok := os.LookupEnv("SAVE_IMG_URI")
 	if !ok {
 		log.Fatal("saveIMG URI not found")
 	}
-	savePort, ok := os.LookupEnv("SAVE_IMG_PORT")
-	if !ok {
-		log.Fatal("saveIMG port not found")
-	}
 
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s:%s/image/%s", saveURI, savePort, id), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/image/%s", saveURI, id), nil)
 	if err != nil {
 		log.Panic("Error during request: ", err)
 		return nil, err
@@ -70,12 +66,12 @@ func GetImageFromId(id string) (models.ImageData, error) {
 
 func SendImageToAPI(file multipart.File, userId string, header *multipart.FileHeader) (string,error) {
 
-	logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.img.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer logFile.Close()
-	log.SetOutput(io.MultiWriter(os.Stdout, logFile))
+	// logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.img.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// defer logFile.Close()
+	// log.SetOutput(io.MultiWriter(os.Stdout, logFile))
 	saveUri, ok := os.LookupEnv("SAVE_IMG_URI")
 	if !ok {
 		log.Fatal("saving URI not found")

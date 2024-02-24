@@ -5,7 +5,6 @@ import (
 	"api-gateway/ocr/models"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -32,40 +31,33 @@ func OcrHandler(w http.ResponseWriter, r *http.Request) {
 			// Appel de l'API OCR
 			ocrData, err := ocr.GetOCRFromId(imageId)
 			if err != nil {
-				log.Panic("Méthode non autorisée")
 				http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
 				return
 			}
 
 			jsonData, err := json.Marshal(ocrData)
 			if err != nil {
-				log.Panic("Méthode non autorisée")
 				http.Error(w, "Erreur lors de la conversion en JSON", http.StatusInternalServerError)
 				return
 			}
-			log.Print("Extraction complétée")
 
 			w.Write(jsonData)
 		} else if imageName != "" {
 			// Appel de l'API OCR
 			ocrData, err := ocr.GetOCR(imageName)
 			if err != nil {
-				log.Panic("Méthode non autorisée")
 				http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
 				return
 			}
 
 			jsonData, err := json.Marshal(ocrData)
 			if err != nil {
-				log.Panic("Méthode non autorisée")
 				http.Error(w, "Erreur lors de la conversion en JSON", http.StatusInternalServerError)
 				return
 			}
-			log.Print("Extraction complétée")
 
 			w.Write(jsonData)
 		} else {
-			log.Panic("Méthode non autorisée")
 			http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
 			return
 		}
@@ -78,7 +70,6 @@ func OcrHandler(w http.ResponseWriter, r *http.Request) {
 		// Lecture du corps de la requête
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			log.Panic("Méthode non autorisée")
 			http.Error(w, "Erreur lors de la lecture du corps de la requête", http.StatusInternalServerError)
 			return
 		}
@@ -86,7 +77,6 @@ func OcrHandler(w http.ResponseWriter, r *http.Request) {
 		// Décodage du JSON dans la structure IInput
 		err = json.Unmarshal(body, &input)
 		if err != nil {
-			log.Panic("Méthode non autorisée")
 			http.Error(w, "Erreur lors de la conversion du JSON", http.StatusInternalServerError)
 			return
 		}
@@ -95,22 +85,18 @@ func OcrHandler(w http.ResponseWriter, r *http.Request) {
 			// Appel de l'API OCR
 			ocrData, err := ocr.PostOCRFromId(imageId, input)
 			if err != nil {
-				log.Panic("Méthode non autorisée")
 				http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
 				return
 			}
 
 			jsonData, err := json.Marshal(ocrData)
 			if err != nil {
-				log.Panic("Méthode non autorisée")
 				http.Error(w, "Erreur lors de la conversion en JSON", http.StatusInternalServerError)
 				return
 			}
-			log.Print("Extraction complétée")
 
 			w.Write(jsonData)
 		} else {
-			log.Panic("Méthode non autorisée")
 			http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
 			return
 		}

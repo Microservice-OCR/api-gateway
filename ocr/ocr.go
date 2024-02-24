@@ -9,28 +9,24 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
+	// "time"
 )
 
 func getExtract(imageName string) ([]byte, error) {
 
-    logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.ocr.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
-    if err != nil {
-        log.Fatal(err)
-    }
-    log.SetOutput(logFile)
+    // logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.ocr.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+    // log.SetOutput(logFile)
 
 	ocrURI, ok := os.LookupEnv("OCR_ENGINE_URI")
 	if !ok {
 		log.Fatal("OCR engine URI not found")
 	}
-	ocrPort, ok := os.LookupEnv("OCR_ENGINE_PORT")
-	if !ok {
-		log.Fatal("OCR engine port not found")
-	}
 
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s:%s/recognize/%s", ocrURI, ocrPort, imageName), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/recognize/%s", ocrURI, imageName), nil)
 	if err != nil {
 		log.Panic("Error during request: ", err)
 		return nil, err
@@ -54,23 +50,19 @@ func getExtract(imageName string) ([]byte, error) {
 
 func getExtractFromId(id string) ([]byte, error) {
 
-    logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.ocr.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
-    if err != nil {
-        log.Fatal(err)
-    }
-    log.SetOutput(logFile)
+    // logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.ocr.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+    // log.SetOutput(logFile)
 
 	ocrURI, ok := os.LookupEnv("OCR_ENGINE_URI")
 	if !ok {
 		log.Fatal("OCR engine URI not found")
 	}
-	ocrPort, ok := os.LookupEnv("OCR_ENGINE_PORT")
-	if !ok {
-		log.Fatal("OCR engine port not found")
-	}
 
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s:%s/recognizeFromId/%s", ocrURI, ocrPort, id), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/recognizeFromId/%s", ocrURI, id), nil)
 	if err != nil {
 		log.Panic("Error during request: ", err)
 		return nil, err
@@ -94,11 +86,11 @@ func getExtractFromId(id string) ([]byte, error) {
 
 func postExtractFromId(id string, bodyData models.IInput) ([]byte, error) {
 
-    logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.ocr.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
-    if err != nil {
-        log.Fatal(err)
-    }
-    log.SetOutput(logFile)
+    // logFile, err := os.OpenFile(fmt.Sprintf("../../logs/%s.ocr.log", time.Now().Format("2006-01-02_15-04-05")), os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+    // log.SetOutput(logFile)
 
 	ocrURI, ok := os.LookupEnv("OCR_ENGINE_URI")
 	if !ok {
