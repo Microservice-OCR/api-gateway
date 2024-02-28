@@ -13,7 +13,7 @@
             "dest": "/api/upload.go"
         },
         {
-            "src": "/api/download/(.*)",
+            "src": "/api/download",
             "methods": ["GET"],
             "dest": "/api/download.go"
         },
