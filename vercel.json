@@ -19,7 +19,7 @@
         },
         {
             "src": "/api/ocr",
-            "methods": ["GET","OPTION"],
+            "methods": ["GET","OPTIONS"],
             "dest": "/api/ocr.go"
         },
         {
