@@ -12,7 +12,7 @@ import (
 )
 
 type ApiResponse struct {
-    JWT_Token    string    `json:"token"`
+    JWT_Token    string    `json:"Token"`
     // ConnectedAt time.Time
 }
 
