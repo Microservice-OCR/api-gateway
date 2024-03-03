@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"api-gateway/middleware"
+	// "api-gateway/middleware"
 	// "time"
 )
 
@@ -76,15 +76,16 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	var result middleware.ApiResponse
-
+	
 	body, err = io.ReadAll(resp.Body)
 	if err != nil {
 		http.Error(w, "Erreur lors de la lecture de la réponse", http.StatusInternalServerError)
 		return
 	}
-
-	if err := json.Unmarshal(body, &result); err != nil {
-		http.Error(w, fmt.Sprintf("Erreur lors de la lecture du corps de la réponse : %s\nresponse : %s",err,body), http.StatusInternalServerError)
-	}
+	
+	// var result middleware.ApiResponse
+	// if err := json.Unmarshal(body, &result); err != nil {
+	// 	http.Error(w, fmt.Sprintf("Erreur lors de la lecture du corps de la réponse : %s\nresponse : %s",err,body), http.StatusInternalServerError)
+	// }
+	w.Write(body)
 }
