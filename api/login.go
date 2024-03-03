@@ -7,12 +7,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"time"
+	// "time"
 )
 
 type ApiResponse struct {
     JWT_Token    string    `json:"token"`
-    ConnectedAt time.Time
+    // ConnectedAt time.Time
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
