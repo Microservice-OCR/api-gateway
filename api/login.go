@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -46,6 +47,10 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Création et envoi de la requête à l'API d'authentification
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/login",AUTH_URI), bytes.NewBuffer(jsonBody))
+	if err != nil {
+		http.Error(w, "Erreur lors de création de la requête", http.StatusInternalServerError)
+		return
+	}
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
@@ -56,8 +61,15 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	var result ApiResponse
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+	result := ApiResponse{}
+
+	body, err = io.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, "Erreur lors de la lecture de la réponse", http.StatusInternalServerError)
+		return
+	}
+
+	if err := json.Unmarshal(body, &result); err != nil {
 		http.Error(w, "Erreur lors de la lecture du corps de la réponse", http.StatusInternalServerError)
 	}
 }
