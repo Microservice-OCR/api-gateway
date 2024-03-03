@@ -61,7 +61,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	result := ApiResponse{}
+	var result ApiResponse
 
 	body, err = io.ReadAll(resp.Body)
 	if err != nil {
@@ -70,6 +70,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.Unmarshal(body, &result); err != nil {
-		http.Error(w, "Erreur lors de la lecture du corps de la réponse", http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Erreur lors de la lecture du corps de la réponse : %s",err), http.StatusInternalServerError)
 	}
 }
