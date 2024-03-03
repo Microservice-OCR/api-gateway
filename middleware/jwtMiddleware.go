@@ -15,7 +15,6 @@ var sessions = make(map[string]*ApiResponse)
 
 func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		http.Error(w, "Erreur lors de la lecture de la réponse", http.StatusUnauthorized)
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
 			// rediriger vers /login frontend
@@ -39,7 +38,7 @@ func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		// Vérifie si plus de 10 minutes se sont écoulées depuis la connexion
-		if time.Since(session.ConnectedAt) <= 0 {
+		if time.Since(session.ConnectedAt) > 10*time.Minute {
 			// modifier l'url pour mettre l'url du frontend
 			// Si le temps actuel est égale au temps enregistrer dans la session
 			http.Error(w, "Erreur lors de la lecture de la réponse", http.StatusUnauthorized)
@@ -47,6 +46,6 @@ func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		// exécuter le gestionnaire suivant
-		// next(w, r)
+		next(w, r)
 	}
 }
