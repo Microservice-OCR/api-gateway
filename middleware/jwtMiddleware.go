@@ -47,6 +47,6 @@ func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		// exécuter le gestionnaire suivant
-		next(w, r)
+		// next(w, r)
 	}
 }
