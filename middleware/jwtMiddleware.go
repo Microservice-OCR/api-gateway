@@ -15,6 +15,7 @@ var sessions = make(map[string]*ApiResponse)
 
 func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, "Erreur lors de la lecture de la réponse", http.StatusUnauthorized)
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
 			// rediriger vers /login frontend
