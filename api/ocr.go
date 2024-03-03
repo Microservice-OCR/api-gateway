@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"api-gateway/middleware"
 	"api-gateway/ocr"
 	"api-gateway/ocr/models"
 	"encoding/json"
@@ -8,7 +9,11 @@ import (
 	"net/http"
 )
 
-func OcrHandler(w http.ResponseWriter, r *http.Request) {
+func OcrHandler(w http.ResponseWriter, r *http.Request){
+	middleware.JwtMiddleware(ocrHandler)
+}
+
+func ocrHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO : SUPPRIMER POUR PROD
 	// Set CORS headers
 	w.Header().Set("Access-Control-Allow-Origin", "*") // or specify your domain

@@ -2,10 +2,15 @@ package handler
 
 import (
 	"api-gateway/img"
+	"api-gateway/middleware"
 	"net/http"
 )
 
-func ImageUploadHandler(w http.ResponseWriter, r *http.Request) {
+func ImageUploadHandler(w http.ResponseWriter, r *http.Request){
+	middleware.JwtMiddleware(imageUploadHandler)
+}
+
+func imageUploadHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO : SUPPRIMER POUR PROD
 	// Set CORS headers
 	w.Header().Set("Access-Control-Allow-Origin", "*") // or specify your domain

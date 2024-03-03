@@ -2,17 +2,23 @@ package handler
 
 import (
 	"api-gateway/img"
+	"api-gateway/middleware"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-func ImageDownloadHandler(w http.ResponseWriter, r *http.Request) {
+func ImageDownloadHandler(w http.ResponseWriter, r *http.Request){
+	middleware.JwtMiddleware(imageDownloadHandler)
+}
+
+func imageDownloadHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO : SUPPRIMER POUR PROD
 	// Set CORS headers
 	w.Header().Set("Access-Control-Allow-Origin", "*") // or specify your domain
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+
 
 	if r.Method == "GET" {
 		// Récupération de l'id de l'image

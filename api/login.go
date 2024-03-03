@@ -8,13 +8,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"api-gateway/middleware"
 	// "time"
 )
-
-type ApiResponse struct {
-    JWT_Token    string    `json:"token"`
-    // ConnectedAt time.Time
-}
 
 type AuthInput struct {
 	Email    string    `json:"email"`
@@ -80,7 +76,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	var result ApiResponse
+	var result middleware.ApiResponse
 
 	body, err = io.ReadAll(resp.Body)
 	if err != nil {
