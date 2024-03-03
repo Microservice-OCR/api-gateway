@@ -7,7 +7,6 @@ import (
 )
 
 func ImageUploadHandler(w http.ResponseWriter, r *http.Request) {
-    // Ici, nous enveloppons directement notre logique avec le middleware
     middleware.JwtMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
         // Votre logique de gestion d'upload
         w.Header().Set("Access-Control-Allow-Origin", "*")

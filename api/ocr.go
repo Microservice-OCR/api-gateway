@@ -9,104 +9,102 @@ import (
 	"net/http"
 )
 
-func OcrHandler(w http.ResponseWriter, r *http.Request){
-	middleware.JwtMiddleware(ocrHandler)
-}
+func OcrHandler(w http.ResponseWriter, r *http.Request) {
+	middleware.JwtMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// TODO : SUPPRIMER POUR PROD
+		// Set CORS headers
+		w.Header().Set("Access-Control-Allow-Origin", "*") // or specify your domain
+		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 
-func ocrHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO : SUPPRIMER POUR PROD
-	// Set CORS headers
-	w.Header().Set("Access-Control-Allow-Origin", "*") // or specify your domain
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
 
-	if r.Method == "OPTIONS" {
-		w.WriteHeader(http.StatusOK)
-		return
-	}
+		// Logique pour OCR
+		if r.Method == "GET" {
+			// Récupération de l'id de l'image
+			imageId := r.URL.Query().Get("id")
+			// Récupération du nom de l'image
+			imageName := r.URL.Query().Get("image")
 
-	// Logique pour OCR
-	if r.Method == "GET" {
-		// Récupération de l'id de l'image
-		imageId := r.URL.Query().Get("id")
-		// Récupération du nom de l'image
-		imageName := r.URL.Query().Get("image")
+			if imageId != "" {
+				// Appel de l'API OCR
+				ocrData, err := ocr.GetOCRFromId(imageId)
+				if err != nil {
+					http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
+					return
+				}
 
-		if imageId != "" {
-			// Appel de l'API OCR
-			ocrData, err := ocr.GetOCRFromId(imageId)
-			if err != nil {
+				jsonData, err := json.Marshal(ocrData)
+				if err != nil {
+					http.Error(w, "Erreur lors de la conversion en JSON", http.StatusInternalServerError)
+					return
+				}
+
+				w.Write(jsonData)
+			} else if imageName != "" {
+				// Appel de l'API OCR
+				ocrData, err := ocr.GetOCR(imageName)
+				if err != nil {
+					http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
+					return
+				}
+
+				jsonData, err := json.Marshal(ocrData)
+				if err != nil {
+					http.Error(w, "Erreur lors de la conversion en JSON", http.StatusInternalServerError)
+					return
+				}
+
+				w.Write(jsonData)
+			} else {
 				http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
 				return
 			}
+		} else if r.Method == "POST" {
+			// Récupération de l'id de l'image
+			imageId := r.URL.Query().Get("id")
+			// Récupération du nom de l'image
+			input := models.IInput{}
 
-			jsonData, err := json.Marshal(ocrData)
+			// Lecture du corps de la requête
+			body, err := ioutil.ReadAll(r.Body)
 			if err != nil {
-				http.Error(w, "Erreur lors de la conversion en JSON", http.StatusInternalServerError)
+				http.Error(w, "Erreur lors de la lecture du corps de la requête", http.StatusInternalServerError)
 				return
 			}
 
-			w.Write(jsonData)
-		} else if imageName != "" {
-			// Appel de l'API OCR
-			ocrData, err := ocr.GetOCR(imageName)
+			// Décodage du JSON dans la structure IInput
+			err = json.Unmarshal(body, &input)
 			if err != nil {
+				http.Error(w, "Erreur lors de la conversion du JSON", http.StatusInternalServerError)
+				return
+			}
+
+			if imageId != "" {
+				// Appel de l'API OCR
+				ocrData, err := ocr.PostOCRFromId(imageId, input)
+				if err != nil {
+					http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
+					return
+				}
+
+				jsonData, err := json.Marshal(ocrData)
+				if err != nil {
+					http.Error(w, "Erreur lors de la conversion en JSON", http.StatusInternalServerError)
+					return
+				}
+
+				w.Write(jsonData)
+			} else {
 				http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
 				return
 			}
-
-			jsonData, err := json.Marshal(ocrData)
-			if err != nil {
-				http.Error(w, "Erreur lors de la conversion en JSON", http.StatusInternalServerError)
-				return
-			}
-
-			w.Write(jsonData)
 		} else {
-			http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
+			http.Error(w, "Only POST method is allowed", http.StatusMethodNotAllowed)
 			return
 		}
-	} else if r.Method == "POST" {
-		// Récupération de l'id de l'image
-		imageId := r.URL.Query().Get("id")
-		// Récupération du nom de l'image
-		input := models.IInput{}
-
-		// Lecture du corps de la requête
-		body, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			http.Error(w, "Erreur lors de la lecture du corps de la requête", http.StatusInternalServerError)
-			return
-		}
-
-		// Décodage du JSON dans la structure IInput
-		err = json.Unmarshal(body, &input)
-		if err != nil {
-			http.Error(w, "Erreur lors de la conversion du JSON", http.StatusInternalServerError)
-			return
-		}
-
-		if imageId != "" {
-			// Appel de l'API OCR
-			ocrData, err := ocr.PostOCRFromId(imageId, input)
-			if err != nil {
-				http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
-				return
-			}
-
-			jsonData, err := json.Marshal(ocrData)
-			if err != nil {
-				http.Error(w, "Erreur lors de la conversion en JSON", http.StatusInternalServerError)
-				return
-			}
-
-			w.Write(jsonData)
-		} else {
-			http.Error(w, "Erreur lors de l'appel de l'API OCR", http.StatusInternalServerError)
-			return
-		}
-	} else {
-		http.Error(w, "Only POST method is allowed", http.StatusMethodNotAllowed)
-		return
-	}
+	})).ServeHTTP(w, r)
 }
