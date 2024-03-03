@@ -26,6 +26,11 @@
             "src": "/api/ocr",
             "methods": ["POST"],
             "dest": "/api/ocr.go"
+        },
+        {
+            "src": "/api/login",
+            "methods": ["POST"],
+            "dest": "/api/login.go"
         }
     ]
 }
