@@ -12,7 +12,7 @@ import (
 )
 
 type ApiResponse struct {
-    JWT_Token    string    `json:"Token"`
+    JWT_Token    string    `json:"token"`
     // ConnectedAt time.Time
 }
 
@@ -46,6 +46,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Création et envoi de la requête à l'API d'authentification
+	client := &http.Client{}
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/login",AUTH_URI), bytes.NewBuffer(jsonBody))
 	if err != nil {
 		http.Error(w, "Erreur lors de création de la requête", http.StatusInternalServerError)
@@ -53,7 +54,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -70,6 +70,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.Unmarshal(body, &result); err != nil {
-		http.Error(w, fmt.Sprintf("Erreur lors de la lecture du corps de la réponse : %s",err), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Erreur lors de la lecture du corps de la réponse : %s\nresponse : %s",err,body), http.StatusInternalServerError)
 	}
 }
