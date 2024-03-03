@@ -16,6 +16,11 @@ type ApiResponse struct {
     // ConnectedAt time.Time
 }
 
+type AuthInput struct {
+	Email    string    `json:"email"`
+	Password string    `json:"password"`
+}
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO : SUPPRIMER POUR PROD
 	// Set CORS headers
@@ -42,17 +47,26 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer r.Body.Close()
+	
+	input := AuthInput{}
 
-	// Encodage des données d'identification au format JSON pour l'API d'authentification
-	jsonBody, err := json.Marshal(body)
+	// Décodage du JSON dans la structure IInput
+	err = json.Unmarshal(body, &input)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Erreur lors de la conversion du JSON", http.StatusInternalServerError)
 		return
+	}
+
+	// Convertir les données du corps en JSON
+	jsonData, err := json.Marshal(input)
+	if err != nil {
+		http.Error(w, "Erreur lors de la conversion du JSON", http.StatusInternalServerError)
+		return 
 	}
 
 	// Création et envoi de la requête à l'API d'authentification
 	client := &http.Client{}
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/login",AUTH_URI), bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/login",AUTH_URI), bytes.NewBuffer(jsonData))
 	if err != nil {
 		http.Error(w, "Erreur lors de création de la requête", http.StatusInternalServerError)
 		return
