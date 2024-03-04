@@ -33,7 +33,7 @@
             "dest": "/api/login.go"
         },
         {
-            "src": "api/logout",
+            "src": "/api/logout",
             "methods": ["POST"],
             "dest": "/api/logout.go"
         }
