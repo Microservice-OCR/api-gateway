@@ -11,7 +11,10 @@ func GatewayLogoutHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*") // or specify your domain
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-	
+	if r.Method == "OPTIONS" {
+        w.WriteHeader(http.StatusOK)
+        return
+    }
 	tokenHeader := r.Header.Get("Authorization")
 	if tokenHeader == "" {
 		http.Error(w, "No token provided", http.StatusBadRequest)
