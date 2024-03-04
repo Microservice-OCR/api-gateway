@@ -2,51 +2,48 @@ package middleware
 
 import (
 	"net/http"
-	// "strings"
+	"strings"
+	"github.com/dgrijalva/jwt-go"
 	"time"
 )
 
-type ApiResponse struct {
-	JWT_Token   string `json:"token"`
-	ConnectedAt time.Time
-}
-
-var sessions = make(map[string]*ApiResponse)
-
 func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// exécuter le gestionnaire suivant
-		next(w, r)
-		// authHeader := r.Header.Get("Authorization")
-		// if authHeader == "" {
-		// 	// rediriger vers /login frontend
-		// 	http.Error(w, "Erreur lors de la lecture de la réponse", http.StatusUnauthorized)
-		// 	return
-		// }
-		// parts := strings.Split(authHeader, " ")
-		// if len(parts) != 2 || parts[0] != "Bearer" {
-		// 	// rediriger vers /login frontend
-		// 	http.Error(w, "Erreur lors de la lecture de la réponse", http.StatusUnauthorized)
-		// 	return
-		// }
-		// jwtToken := parts[1]
+		tokenHeader := r.Header.Get("Authorization")
+		if tokenHeader == "" {
+			http.Error(w, "Authorization header is missing", http.StatusUnauthorized)
+			return
+		}
 
-		// // Vérifie si le JWT existe dans sessions
-		// session, exists := sessions[jwtToken]
-		// if !exists {
-		// 	// rediriger vers /login frontend
-		// 	http.Error(w, "Erreur lors de la lecture de la réponse", http.StatusUnauthorized)
-		// 	return
-		// }
+		tokenString := strings.TrimPrefix(tokenHeader, "Bearer ")
+		if tokenString == "" {
+			http.Error(w, "Token is missing", http.StatusUnauthorized)
+			return
+		}
 
-		// // Vérifie si plus de 10 minutes se sont écoulées depuis la connexion
-		// if time.Since(session.ConnectedAt) > 10*time.Minute {
-		// 	// modifier l'url pour mettre l'url du frontend
-		// 	// Si le temps actuel est égale au temps enregistrer dans la session
-		// 	http.Error(w, "Erreur lors de la lecture de la réponse", http.StatusUnauthorized)
-		// 	return
-		// }
+		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, http.ErrAbortHandler
+			}
+			return []byte("YourSigningKey"), nil
+		})
 
-		
+		if err != nil {
+			http.Error(w, "Invalid token", http.StatusUnauthorized)
+			return
+		}
+
+		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			if exp, ok := claims["exp"].(float64); ok {
+				if time.Unix(int64(exp), 0).Before(time.Now()) {
+					http.Redirect(w, r, "/logout", http.StatusSeeOther)
+					return
+				}
+			}
+
+			next.ServeHTTP(w, r)
+		} else {
+			http.Error(w, "Invalid token", http.StatusUnauthorized)
+		}
 	}
 }
