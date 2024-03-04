@@ -74,7 +74,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Erreur lors de la requête", http.StatusInternalServerError)
 		return
 	}
 	defer resp.Body.Close()
