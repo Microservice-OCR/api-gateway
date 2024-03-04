@@ -9,12 +9,12 @@
     "routes": [
         {
             "src": "/api/upload",
-            "methods": ["POST"],
+            "methods": ["POST","OPTIONS"],
             "dest": "/api/upload.go"
         },
         {
             "src": "/api/download",
-            "methods": ["GET"],
+            "methods": ["GET","OPTIONS"],
             "dest": "/api/download.go"
         },
         {
@@ -24,22 +24,22 @@
         },
         {
             "src": "/api/ocr",
-            "methods": ["POST"],
+            "methods": ["POST","OPTIONS"],
             "dest": "/api/ocr.go"
         },
         {
             "src": "/api/login",
-            "methods": ["POST"],
+            "methods": ["POST","OPTIONS"],
             "dest": "/api/login.go"
         },
         {
             "src": "/api/logout",
-            "methods": ["POST"],
+            "methods": ["POST","OPTIONS"],
             "dest": "/api/logout.go"
         },
         {
             "src": "/api/token",
-            "methods": ["GET"],
+            "methods": ["GET","OPTIONS"],
             "dest": "/api/token.go"
         }
     ]

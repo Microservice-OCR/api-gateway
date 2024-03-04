@@ -10,8 +10,13 @@ func ImageUploadHandler(w http.ResponseWriter, r *http.Request) {
     middleware.JwtMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
         // Votre logique de gestion d'upload
         w.Header().Set("Access-Control-Allow-Origin", "*")
-        w.Header().Set("Access-Control-Allow-Methods", "POST")
+        w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
         w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+        
+        if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
 
         file, header, err := r.FormFile("image")
         if err != nil {

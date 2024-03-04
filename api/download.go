@@ -13,9 +13,13 @@ func ImageDownloadHandler(w http.ResponseWriter, r *http.Request) {
 		// TODO : SUPPRIMER POUR PROD
 		// Set CORS headers
 		w.Header().Set("Access-Control-Allow-Origin", "*") // or specify your domain
-		w.Header().Set("Access-Control-Allow-Methods", "GET")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-	
+		
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
 	
 		if r.Method == "GET" {
 			// Récupération de l'id de l'image
