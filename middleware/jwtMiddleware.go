@@ -3,8 +3,7 @@ package middleware
 import (
 	"net/http"
 	"strings"
-	"github.com/dgrijalva/jwt-go"
-	"time"
+	"api-gateway/auth"
 )
 
 func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
@@ -15,35 +14,31 @@ func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		tokenString := strings.TrimPrefix(tokenHeader, "Bearer ")
-		if tokenString == "" {
+		token := strings.TrimPrefix(tokenHeader, "Bearer ")
+		if token == "" {
 			http.Error(w, "Token is missing", http.StatusUnauthorized)
 			return
 		}
 
-		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, http.ErrAbortHandler
-			}
-			return []byte("YourSigningKey"), nil
-		})
-
+		validTokens, err := auth.GetAllTokensFromAuthService()
 		if err != nil {
+			http.Error(w, "Failed to get valid tokens", http.StatusInternalServerError)
+			return
+		}
+
+		tokenIsValid := false
+		for _, tokenInfo := range validTokens {
+			if token == tokenInfo.Token {
+				tokenIsValid = true
+				break
+			}
+		}
+
+		if !tokenIsValid {
 			http.Error(w, "Invalid token", http.StatusUnauthorized)
 			return
 		}
 
-		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			if exp, ok := claims["exp"].(float64); ok {
-				if time.Unix(int64(exp), 0).Before(time.Now()) {
-					http.Redirect(w, r, "/logout", http.StatusSeeOther)
-					return
-				}
-			}
-
-			next.ServeHTTP(w, r)
-		} else {
-			http.Error(w, "Invalid token", http.StatusUnauthorized)
-		}
+		next.ServeHTTP(w, r)
 	}
 }
