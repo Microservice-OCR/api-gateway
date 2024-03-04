@@ -10,6 +10,10 @@ import (
 )
 
 func OcrHandler(w http.ResponseWriter, r *http.Request) {
+    if r.Method == "OPTIONS" {
+        w.WriteHeader(http.StatusOK)
+        return
+    }
 	middleware.JwtMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// TODO : SUPPRIMER POUR PROD
 		// Set CORS headers
