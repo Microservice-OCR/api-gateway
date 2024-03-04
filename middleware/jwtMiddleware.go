@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"api-gateway/auth"
-	"fmt"
 	"net/http"
 	"strings"
 )
