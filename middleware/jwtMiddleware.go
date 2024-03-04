@@ -23,7 +23,7 @@ func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
 		validTokens, err := auth.GetAllTokensFromAuthService()
 		if err != nil {
-			http.Error(w, fmt.Sprintf("Failed to get valid tokens : %s",err), http.StatusInternalServerError)
+			http.Error(w, "Failed to get valid tokens", http.StatusInternalServerError)
 			return
 		}
 

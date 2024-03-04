@@ -2,5 +2,5 @@ package models
 
 type TokenInfo struct {
     Token       string `json:"Token"`
-    ConnectedAt string `json:"ConnectedAt"`
+    ConnectedAt int64 `json:"ConnectedAt"`
 }
