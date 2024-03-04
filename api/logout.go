@@ -6,6 +6,12 @@ import (
 )
 
 func GatewayLogoutHandler(w http.ResponseWriter, r *http.Request) {
+	// TODO : SUPPRIMER POUR PROD
+	// Set CORS headers
+	w.Header().Set("Access-Control-Allow-Origin", "*") // or specify your domain
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	
 	tokenHeader := r.Header.Get("Authorization")
 	if tokenHeader == "" {
 		http.Error(w, "No token provided", http.StatusBadRequest)
