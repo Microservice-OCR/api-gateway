@@ -73,7 +73,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.Do(req)
-	if err != nil {
+	if err != nil || resp.Status != "200 OK" {
 		http.Error(w, "Erreur lors de la requête", http.StatusInternalServerError)
 		return
 	}
