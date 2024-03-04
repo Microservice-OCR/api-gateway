@@ -1,18 +1,22 @@
 package auth
 
 import (
-	"encoding/json"
-	"net/http"
-	"time"
 	"api-gateway/img/models"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"os"
+	"time"
 )
 
 // GetAllTokensFromAuthService appelle le service d'authentification et récupère tous les tokens valides.
 func GetAllTokensFromAuthService() ([]models.TokenInfo, error) {
-	url := "https://auth-theta-opal.vercel.app/api/token"
-
+	AUTH_URI,ok := os.LookupEnv("AUTH_URI")
+	if !ok {
+		return nil, nil
+	}
 	client := &http.Client{Timeout: 10 * time.Second}
-	resp, err := client.Get(url)
+	resp, err := client.Get(fmt.Sprintf("%s/token",AUTH_URI))
 	if err != nil {
 		return nil, err
 	}
