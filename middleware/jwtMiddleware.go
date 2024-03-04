@@ -1,9 +1,10 @@
 package middleware
 
 import (
+	"api-gateway/auth"
+	"fmt"
 	"net/http"
 	"strings"
-	"api-gateway/auth"
 )
 
 func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
@@ -22,7 +23,7 @@ func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
 		validTokens, err := auth.GetAllTokensFromAuthService()
 		if err != nil {
-			http.Error(w, "Failed to get valid tokens", http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("Failed to get valid tokens : %s",err), http.StatusInternalServerError)
 			return
 		}
 
