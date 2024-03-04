@@ -33,9 +33,5 @@ func GatewayLogoutHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// http.Redirect(w, r, "https://cloudocr.vercel.app/", http.StatusSeeOther)
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Déconnexion réussie. Vous pouvez maintenant fermer cette page ou retourner à l'accueil."))
-
+	http.Redirect(w, r, "https://cloudocr.vercel.app/", http.StatusSeeOther)
 }
