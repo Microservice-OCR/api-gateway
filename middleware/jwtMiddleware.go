@@ -15,6 +15,8 @@ var sessions = make(map[string]*ApiResponse)
 
 func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// exécuter le gestionnaire suivant
+		next(w, r)
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
 			// rediriger vers /login frontend
@@ -45,7 +47,6 @@ func JwtMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		// exécuter le gestionnaire suivant
-		next(w, r)
+		
 	}
 }
