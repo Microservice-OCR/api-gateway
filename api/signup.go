@@ -12,17 +12,29 @@ type SignupRequest struct {
 	Password string `json:"password"`
 }
 
+func setupCORS(w *http.ResponseWriter, req *http.Request) {
+    (*w).Header().Set("Access-Control-Allow-Origin", "https://cloudocr.vercel.app")
+    (*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+    (*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+}
+
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO : SUPPRIMER POUR PROD
 	// Set CORS headers
-	w.Header().Set("Access-Control-Allow-Origin", "*") // or specify your domain
+	w.Header().Set("Access-Control-Allow-Origin", "*") 
 	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	setupCORS(&w, r)
+    if r.Method == "OPTIONS" {
+        return
+    }
+
+
 	if r.Method == "OPTIONS" {
         w.WriteHeader(http.StatusOK)
         return
     }
-	
+
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
