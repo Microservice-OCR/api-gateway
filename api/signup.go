@@ -1,53 +1,49 @@
 package handler
 
 import (
-    "bytes"
-    "encoding/json"
-    "io/ioutil"
-    "net/http"
-    "api-gateway/img/models"
+	"bytes"
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
 )
 
+type SignupRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
-    var req models.SignupRequest
-    err := json.NewDecoder(r.Body).Decode(&req)
-    if err != nil {
-        http.Error(w, "Invalid request body", http.StatusBadRequest)
-        return
-    }
+	var signupReq SignupRequest
+	err := json.NewDecoder(r.Body).Decode(&signupReq)
+	if err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
 
-    authData, err := json.Marshal(req)
-    if err != nil {
-        http.Error(w, "Error encoding auth request", http.StatusInternalServerError)
-        return
-    }
+	authData, err := json.Marshal(signupReq)
+	if err != nil {
+		http.Error(w, "Error encoding signup request", http.StatusInternalServerError)
+		return
+	}
 
-    authServiceURL := "https://auth-microservice-ocr.vercel.app/api/signup"
-    resp, err := http.Post(authServiceURL, "application/json", bytes.NewBuffer(authData))
-    if err != nil {
-        http.Error(w, "Failed to call auth service", http.StatusInternalServerError)
-        return
-    }
-    defer resp.Body.Close()
+	authServiceURL := "https://auth-microservice-ocr.vercel.app/api/signup"
 
-    var authResp models.AuthResponse
-    body, err := ioutil.ReadAll(resp.Body)
-    if err != nil {
-        http.Error(w, "Failed to read auth service response", http.StatusInternalServerError)
-        return
-    }
-    err = json.Unmarshal(body, &authResp)
-    if err != nil {
-        http.Error(w, "Error decoding auth response", http.StatusInternalServerError)
-        return
-    }
+	resp, err := http.Post(authServiceURL, "application/json", bytes.NewBuffer(authData))
+	if err != nil {
+		http.Error(w, "Failed to call auth service", http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
 
-    if authResp.Error != "" {
-        http.Error(w, authResp.Error, http.StatusBadRequest)
-        return
-    }
-
-    w.Header().Set("Content-Type", "application/json")
-    w.WriteHeader(http.StatusOK)
-    w.Write(body) 
+	if resp.StatusCode == http.StatusOK {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Inscription réussie"))
+	} else {
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			http.Error(w, "Failed to read response from auth service", http.StatusInternalServerError)
+			return
+		}
+		http.Error(w, string(body), resp.StatusCode)
+	}
 }
