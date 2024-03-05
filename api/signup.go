@@ -22,7 +22,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    authServiceURL := "https://api-gateway-beryl.vercel.app/api/signup"
+    authServiceURL := "https://auth-microservice-ocr.vercel.app/api/signup"
     resp, err := http.Post(authServiceURL, "application/json", bytes.NewBuffer(authData))
     if err != nil {
         http.Error(w, "Failed to call auth service", http.StatusInternalServerError)
