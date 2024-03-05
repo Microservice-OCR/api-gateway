@@ -1,0 +1,51 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "/api/**/*.go",
+            "use": "@vercel/go"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/upload",
+            "methods": ["POST","OPTIONS"],
+            "dest": "/api/upload.go"
+        },
+        {
+            "src": "/api/download",
+            "methods": ["GET","OPTIONS"],
+            "dest": "/api/download.go"
+        },
+        {
+            "src": "/api/ocr",
+            "methods": ["GET","OPTIONS"],
+            "dest": "/api/ocr.go"
+        },
+        {
+            "src": "/api/ocr",
+            "methods": ["POST","OPTIONS"],
+            "dest": "/api/ocr.go"
+        },
+        {
+            "src": "/api/login",
+            "methods": ["POST","OPTIONS"],
+            "dest": "/api/login.go"
+        },
+        {
+            "src": "/api/logout",
+            "methods": ["POST","OPTIONS"],
+            "dest": "/api/logout.go"
+        },
+        {
+            "src": "/api/token",
+            "methods": ["GET","OPTIONS"],
+            "dest": "/api/token.go"
+        },
+        {
+            "src": "/api/signup",
+            "methods": ["POST", "OPTIONS"],
+            "dest": "/api/signup.go"
+        }
+    ]
+}

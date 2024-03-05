@@ -1,0 +1,127 @@
+2024/02/09 10:19:50 Extraction complétée
+2024/02/09 10:20:39 Méthode non autorisée
+2024/02/09 10:20:39 http: panic serving 172.19.0.1:56876: Méthode non autorisée
+goroutine 41 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc000015a80?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001b1a40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc000152d20}, 0xc0001fe400)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc000152d20?}, 0xc00010572c?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc000152d20}, 0xc0001fe400)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc000152d20?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc000145200, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb
+2024/02/09 10:20:39 Méthode non autorisée
+2024/02/09 10:20:40 http: panic serving 172.19.0.1:38182: Méthode non autorisée
+goroutine 107 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc000015b30?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001b1a40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc000152e00}, 0xc0001fe600)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc000152e00?}, 0xc0001057ec?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc000152e00}, 0xc0001fe600)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc000152e00?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc0001fc7e0, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb
+2024/02/09 10:20:49 Méthode non autorisée
+2024/02/09 10:20:49 http: panic serving 172.19.0.1:35660: Méthode non autorisée
+goroutine 109 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc00020aa30?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001dda40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc000220620}, 0xc00021aa00)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc000220620?}, 0xc0002308ec?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc000220620}, 0xc00021aa00)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc000220620?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc0001fca20, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb
+2024/02/09 10:20:49 Méthode non autorisée
+2024/02/09 10:20:49 http: panic serving 172.19.0.1:35670: Méthode non autorisée
+goroutine 119 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc0000aea60?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001dba40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc0000e62a0}, 0xc0000dec00)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc0000e62a0?}, 0xc0000a0bec?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc0000e62a0}, 0xc0000dec00)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc0000e62a0?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc000094d80, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb
+2024/02/09 10:21:16 Méthode non autorisée
+2024/02/09 10:21:16 http: panic serving 172.19.0.1:55588: Méthode non autorisée
+goroutine 121 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc0000aeb60?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001dba40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc0000e6460}, 0xc0000def00)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc0000e6460?}, 0xc0000a0cec?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc0000e6460}, 0xc0000def00)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc0000e6460?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc000094fc0, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb
+2024/02/09 10:21:16 Méthode non autorisée
+2024/02/09 10:21:16 http: panic serving 172.19.0.1:55592: Méthode non autorisée
+goroutine 124 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go/src/net/http/server.go:1868 +0xb9
+panic({0x685e40?, 0xc0000aec10?})
+	/usr/local/go/src/runtime/panic.go:920 +0x270
+log.Panic({0xc0001dba40?, 0xb0?, 0x200?})
+	/usr/local/go/src/log/log.go:432 +0x5a
+main.ocrHandler({0x7642e8, 0xc0000e6540}, 0xc0000df100)
+	/go/gateway/main.go:187 +0xb35
+net/http.HandlerFunc.ServeHTTP(0x10?, {0x7642e8?, 0xc0000e6540?}, 0xc0000a0dac?)
+	/usr/local/go/src/net/http/server.go:2136 +0x29
+net/http.(*ServeMux).ServeHTTP(0x40d125?, {0x7642e8, 0xc0000e6540}, 0xc0000df100)
+	/usr/local/go/src/net/http/server.go:2514 +0x142
+net/http.serverHandler.ServeHTTP({0x763348?}, {0x7642e8?, 0xc0000e6540?}, 0x6?)
+	/usr/local/go/src/net/http/server.go:2938 +0x8e
+net/http.(*conn).serve(0xc000095290, {0x764920, 0xc00007cab0})
+	/usr/local/go/src/net/http/server.go:2009 +0x5f4
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go/src/net/http/server.go:3086 +0x5cb
