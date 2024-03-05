@@ -44,7 +44,7 @@
         },
         {
             "src": "/api/signup",
-            "methods": ["POST"],
+            "methods": ["POST", "OPTIONS"],
             "dest": "/api/signup.go"
         }
     ]
