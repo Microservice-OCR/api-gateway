@@ -27,6 +27,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
         w.WriteHeader(http.StatusOK)
         return
     }
+	
 	AUTH_URI, ok := os.LookupEnv("AUTH_URI")
 	if !ok {
 		http.Error(w, "Auth URI not found", http.StatusInternalServerError)
